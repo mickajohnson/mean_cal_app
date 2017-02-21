@@ -1,0 +1,17 @@
+<a href="#!/home">Return Home</a>
+<h1>Add Event</h1>
+<form ng-submit="createEvent()">
+<label>
+Event Description: <input type='text' placeholder='Description' ng-model='event.description'>
+</lable>
+<label>
+Event Date: <input type='date' ng-model="event.date">
+</label>
+<label>
+Event Start Time: <input type='time' ng-model="event.startTime">
+</label>
+<label>
+Event End Time: <input type='time' ng-model="event.endTime">
+</label>
+<input type='submit' value='Create Event'>
+</form>
