@@ -8,13 +8,11 @@ app.controller("newEventController", ["$scope", "eventFactory", "$location", "$c
 
   $scope.createEvent= function(){
     $scope.event.user = $scope.id;
-    console.log($scope.event)
     eventFactory.createEvent($scope.event, function(data){
-      if (data.error){
-        console.log(data.error);
+      if (data.data.err){
+        $scope.error = data.data.err
       }
       else {
-        console.log(data);
         $location.url('/home')
       }
     })

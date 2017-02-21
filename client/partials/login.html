@@ -5,3 +5,7 @@
   </label>
   <input type="submit" value="Log in">
 </form>
+<div ng-if="errors">
+  <p ng-repeat="error in errors">{{error.message}}</p>
+
+</div>

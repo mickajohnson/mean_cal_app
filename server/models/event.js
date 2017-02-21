@@ -7,7 +7,7 @@ var eventSchema = mongoose.Schema({
 },{timestamps: true})
 
 var userSchema = mongoose.Schema({
-  username: {type: String, required: [true, 'Username is required.'], unique: [true, 'Username is already created.'], minlength: 3},
+  username: {type: String, required: [true, 'Username is required.'], unique: [true, 'Username is already created.'], minlength: [3, "Username must be longer than 3 characters"]},
   events: [eventSchema]
 },{timestamps: true})
 

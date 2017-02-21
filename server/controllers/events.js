@@ -27,43 +27,57 @@ module.exports = {
     var day = date.getDate();
     var month = date.getMonth();
     var year = date.getFullYear();
-    var startHour = startTime.getHours() - 5;
+    var startHour = startTime.getHours();
     var startMinute = startTime.getMinutes();
-    var endHour = endTime.getHours() - 5;
+    var endHour = endTime.getHours();
     var endMinute = endTime.getMinutes();
     var startDate = new Date(year, month, day, startHour, startMinute);
     var endDate = new Date(year, month, day, endHour, endMinute);
-    User.findOne({_id: request.body.user}, function(err, user){
-      console.log(user);
-      var event = new Event({
-        description: request.body.description,
-        startDate: startDate,
-        endDate: endDate
-      });
-      event.save(function(err){
-        if (err){
-          response.json({err:err});
-          console.log(err);
-        }
-        else {
-          console.log(user.events);
-          user.events.push(event);
-          user.save(function(err){
-            if (err){
-              response.json({err:err});
-              console.log(err);
-            }
-            else {
-              response.json({user:user, event:event})
-            }
-          })
-        }
+    var todayDate = new Date();
+    var todayDay = todayDate.getDate();
+    var todayMonth = todayDate.getMonth();
+    var todayYear = todayDate.getFullYear();
+    if((year < todayYear) || (year === todayYear && month < todayMonth) || (year === todayYear && month === todayMonth && day <todayDay)){
+      response.json({err: "There's no way you can make that, dummy"})
+    }
+    else if (startHour > endHour){
+      response.json({err: "End time can't be before start time, dummy"})
+    }
+    else if(startHour == endHour && startMinute > endMinute){
+      response.json({err: "End time can't be before start time, dummy"})
+    }
+    else {
+      User.findOne({_id: request.body.user}, function(err, user){
+        console.log(user);
+        var event = new Event({
+          description: request.body.description,
+          startDate: startDate,
+          endDate: endDate
+        });
+        event.save(function(err){
+          if (err){
+            response.json({err:err});
+            console.log(err);
+          }
+          else {
+            console.log(user.events);
+            user.events.push(event);
+            user.save(function(err){
+              if (err){
+                response.json({err:err});
+                console.log(err);
+              }
+              else {
+                response.json({user:user, event:event})
+              }
+            })
+          }
+        })
       })
-    })
-
+    }
   },
   showEvents: function(request, response){
-    User.findOne({_id: request.params.id}, function(err, user){
+    User.findOne({_id: request.params.id}).exec(function(err, user){
       if(err){
         response.json({err: err})
       }

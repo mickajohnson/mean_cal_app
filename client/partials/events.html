@@ -4,17 +4,17 @@
 
 <div>
   <h1>Today:</h1>
-  <div ng-repeat="event in today">
-    <h3>{{event.startDate | date:'h:mm'}} - {{event.endDate | date:'h:mm'}}</h3>
+  <div ng-repeat="event in today | orderBy: 'startDate'">
+    <h3>{{event.startDate | date:'h:mm a'}} - {{event.endDate | date:'h:mm a'}}</h3>
     <p>{{event.description}}</p>
   </div>
 </div>
 
 <div>
-  <h1>Tomorrow!:</h1>
+  <h1>Tomorrow:</h1>
 
-  <div ng-repeat="event in tomorrow">
-    <h3>{{event.startDate | date:'h:mm'}} - {{event.endDate | date:'h:mm'}}</h3>
+  <div ng-repeat="event in tomorrow | orderBy: 'startDate'">
+    <h3>{{event.startDate | date:'h:mm a'}} - {{event.endDate | date:'h:mm a'}}</h3>
     <p>{{event.description}}</p>
   </div>
 </div>
